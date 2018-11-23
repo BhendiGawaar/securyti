@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.securyti.security.UserAccountService;
 
@@ -23,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http
             .httpBasic().disable()
             .csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
             .and()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
@@ -37,9 +39,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         return super.authenticationManagerBean();
     }
 	
-	  @Override
-	  protected void configure(final AuthenticationManagerBuilder auth)
+	@Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+	
+	@Override
+	protected void configure(final AuthenticationManagerBuilder auth)
 	      throws Exception {
-	    auth.userDetailsService(userAccountService);
-	  }
+	    auth.userDetailsService(userAccountService).passwordEncoder(passwordEncoder());
+	}
 }
