@@ -3,12 +3,12 @@ package com.example.securyti.security;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.example.securyti.entity.User;
 import com.example.securyti.repository.UserRepository;
 
-@Component
+@Service
 public class UserAccountService implements UserDetailsService{
 
 	private UserRepository userRepository;

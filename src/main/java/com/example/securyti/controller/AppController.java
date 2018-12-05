@@ -52,7 +52,7 @@ public class AppController {
                 HttpStatus.BAD_REQUEST);
 	}
 	
-	@PostMapping("/login")
+	@PostMapping("/test")
 	public String login(@RequestBody LoginDto dto){
 		Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
